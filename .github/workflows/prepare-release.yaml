@@ -14,9 +14,6 @@ on:
                 description: 'Force prepare even if no changes detected'
                 required: false
                 type: boolean
-    push:
-        branches:
-            - release/**
 permissions:
     actions: write
     checks: write
@@ -49,7 +46,6 @@ jobs:
                   git config --global user.name "github-actions[bot]"
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
             - name: Prepare release
-              if: github.event_name == 'workflow_dispatch'
               run: ./scripts/prepare-release.sh --create-pr --force=${{ github.event.inputs.force }}
               env:
                   GH_TOKEN: ${{ github.token }}
